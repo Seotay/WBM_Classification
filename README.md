@@ -15,21 +15,19 @@ The project is based on the full labeled **WM-811K dataset (172,950 samples)** a
 </p>
 
 
-## Summary
+## Contributions
 
-- **Task**: 9-class wafer defect pattern classification
-- **Dataset**: Full labeled WM-811K dataset, including 147,431 `None` samples
-- **Architecture**: CNN Encoder + Multi-Layer Fully Connected Classifier
-- **Input Representation**: 128 x 128 x 3 one-hot encoded wafer maps
-- **Imbalance Strategy**: Failure-class geometric augmentation + class-weighted focal loss
-- **Augmentation**: Horizontal flip, vertical flip, and random rotation applied only to defect classes
-- **Evaluation**: 30 independent stratified train/validation/test splits
-- **Best Performance**: Accuracy `0.976 +/- 0.002`, Macro-F1 `0.882 +/- 0.009`
-- **Key Improvement**: Scratch recall improved from `0.388` to `0.725`
-- **Framework**: PyTorch 2.4.0
-- **GPU**: NVIDIA RTX 4080 16GB
-- **Inference Latency**: `0.225 ms/sample` at batch size 512
-- **Number of Classes**: 9  
+- **Deployment-oriented evaluation**: Uses all 172,950 labeled WM-811K samples, including the dominant `None` class, while preserving the original validation and test class distributions.
+- **Imbalance-aware learning**: Combines minority-class geometric augmentation with class-weighted focal loss to reduce majority-class bias and improve difficult defect recognition.
+- **Robust performance analysis**: Evaluates sensitivity, ablation, and stability across 30 independent stratified data splits, focusing on minority-defect sensitivity and false-positive control.
+- **Explainable process diagnosis**: Uses t-SNE and Grad-CAM to analyze learned feature separation and decision-relevant wafer regions, including representative misclassification cases.
+
+## Key Results
+
+- **Classification performance**: Accuracy `0.976 +/- 0.002`, Macro-F1 `0.882 +/- 0.009`
+- **Scratch recall improvement**: `0.388` to `0.725` compared with the baseline
+- **Inference latency**: `0.225 ms/sample` at batch size 512 on an NVIDIA RTX 4080 16GB GPU
+- **Classes**: 9  
   (`Center`, `Donut`, `Edge-Loc`, `Edge-Ring`, `Loc`, `Random`, `Scratch`, `Near-Full`, `None`)
 
 ---
@@ -48,12 +46,6 @@ project/
     workflow.png
   model/
     model.py
-    TasiCNN.py
-    ShinCNN.py
-    JangCNN.py
-    ChenCNN.py
-    ChauhanCNN.py
-    BiswasCNN.py
   utils/
     dataset.py
     loss.py
