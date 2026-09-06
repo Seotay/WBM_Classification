@@ -11,7 +11,7 @@ The project is based on the full labeled **WM-811K dataset (172,950 samples)** a
 <p align="center">
   <img src="./figures/workflow.png" width="650"/>
   <br/>
-  <em>Overall workflow of the CNN-based wafer defect classification framework.</em>
+  <em> Overall workflow of the CNN framework for wafer defect classification, including preprocessing, feature extraction, classification, and interpretability analysis</em>
 </p>
 
 
@@ -34,26 +34,31 @@ The project is based on the full labeled **WM-811K dataset (172,950 samples)** a
 
 ## Directory Structure
 
-After downloading the WM-811K dataset, organize the project as follows:
+Organize the project as follows:
 
 ```text
 project/
-  checkpoints/
-    cnn_multi_class_best.pt
-  data/
-    WM-811K-labeled-dataset.pkl
-  figures/
-    workflow.png
-  model/
-    model.py
-  utils/
-    dataset.py
-    loss.py
-    trainer.py
-    utils.py
-  inference_latancy.py
-  main.py
-  README.md
+    ├── checkpoints/
+    │   └── cnn_multi_class_best.pt
+    │
+    ├── data/
+    │   └── WM-811K-labeled-dataset.pkl
+    │
+    ├── figures/
+    │   └── workflow.png
+    │
+    ├── model/
+    │   └── model.py
+    │
+    ├── utils/
+    │   ├── dataset.py
+    │   ├── loss.py
+    │   ├── trainer.py
+    │   └── utils.py
+    │
+    ├── inference_latancy.py
+    ├── main.py
+    └── README.md
 ```
 
 ### Notes
