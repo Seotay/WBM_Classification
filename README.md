@@ -1,4 +1,4 @@
-# Wafer Defect Classification
+# Robust Process Diagnosis using Explainable CNNs for Highly Imbalanced Wafer Map Defect Classification in Semiconductor Manufacturing
 
 ## Purpose
 This repository implements a **CNN-based wafer bin map defect classification framework** for realistic semiconductor manufacturing data with severe class imbalance.
