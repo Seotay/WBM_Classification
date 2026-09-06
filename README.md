@@ -1,9 +1,9 @@
 # Wafer Defect Classification
 
 ## Purpose
-This repository implements a **CNN-based wafer defect pattern classification framework** designed for severe class imbalance conditions in real semiconductor manufacturing environments.
+This repository implements a **CNN-based wafer bin map defect classification framework** for realistic semiconductor manufacturing data with severe class imbalance.
 
-The model is evaluated on the **full labeled WM-811K dataset (172,950 samples)** without excluding wafers with irregular resolutions or aspect ratios.
+The project is based on the full labeled **WM-811K dataset (172,950 samples)** and keeps the dominant `None` class in validation and test sets to evaluate performance under production-like class distributions.
 
 
 ## Workflow
@@ -11,48 +11,61 @@ The model is evaluated on the **full labeled WM-811K dataset (172,950 samples)**
 <p align="center">
   <img src="./figures/workflow.png" width="650"/>
   <br/>
-  <em>Overall workflow of the proposed CNN-based wafer defect classification framework.</em>
+  <em>Overall workflow of the CNN-based wafer defect classification framework.</em>
 </p>
 
 
 ## Summary
 
+- **Task**: 9-class wafer defect pattern classification
+- **Dataset**: Full labeled WM-811K dataset, including 147,431 `None` samples
 - **Architecture**: CNN Encoder + Multi-Layer Fully Connected Classifier
-- **Input Resolution**: 128 × 128 (aspect-ratio preserved resizing)
-- **Loss Function**: Focal Loss (α = 0.15, γ ∈ {1.5, 2.5, 3.5})
-- **Data Augmentation**: Applied to failure-pattern classes only
+- **Input Representation**: 128 x 128 x 3 one-hot encoded wafer maps
+- **Imbalance Strategy**: Failure-class geometric augmentation + class-weighted focal loss
+- **Augmentation**: Horizontal flip, vertical flip, and random rotation applied only to defect classes
+- **Evaluation**: 30 independent stratified train/validation/test splits
+- **Best Performance**: Accuracy `0.976 +/- 0.002`, Macro-F1 `0.882 +/- 0.009`
+- **Key Improvement**: Scratch recall improved from `0.388` to `0.725`
+- **Framework**: PyTorch 2.4.0
+- **GPU**: NVIDIA RTX 4080 16GB
+- **Inference Latency**: `0.225 ms/sample` at batch size 512
 - **Number of Classes**: 9  
   (`Center`, `Donut`, `Edge-Loc`, `Edge-Ring`, `Loc`, `Random`, `Scratch`, `Near-Full`, `None`)
-- **Framework**: PyTorch 2.4.0
-- **GPU**: NVIDIA RTX 4080 (16GB)
 
 ---
 
 ## Directory Structure
-After downloading the WM-811K Dataset, files in the following directory structure:
 
-```
+After downloading the WM-811K dataset, organize the project as follows:
+
+```text
 project/
-    ├── config/
-    │   └── config.py  # Training & Inference configuration
-    │
-    ├── checkpoints/
-    │   └── cnn_multi_class_best.pt
-    │
-    ├── utils/
-    │   ├── dataset.py
-    │   ├── utils.py
-    │
-    ├── data/
-    │   ├── README.md
-    │   ├── WM-811K-labeled dataset(.pkl)       
-    │
-    ├── main.py         
-    ├── model.py          
-    └── trainer.py                     
+  checkpoints/
+    cnn_multi_class_best.pt
+  data/
+    WM-811K-labeled-dataset.pkl
+  figures/
+    workflow.png
+  model/
+    model.py
+    TasiCNN.py
+    ShinCNN.py
+    JangCNN.py
+    ChenCNN.py
+    ChauhanCNN.py
+    BiswasCNN.py
+  utils/
+    dataset.py
+    loss.py
+    trainer.py
+    utils.py
+  inference_latancy.py
+  main.py
+  README.md
+```
 
 ### Notes
-- The raw WM-811K dataset should be placed inside the `data/` directory.
-- The `.pkl` file contains only the labeled portion (172,950 samples).
+
+- Place the raw or preprocessed WM-811K labeled `.pkl` file inside the `data/` directory.
 - Model checkpoints are saved in the `checkpoints/` directory.
-```
+- The full labeled dataset contains 172,950 samples across nine classes.
