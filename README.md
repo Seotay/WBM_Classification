@@ -9,7 +9,7 @@ The model is evaluated on the **full labeled WM-811K dataset (172,950 samples)**
 ## Workflow
 
 <p align="center">
-  <img src="./figures/workflow.jpg" width="650"/>
+  <img src="./figures/workflow.png" width="650"/>
   <br/>
   <em>Overall workflow of the proposed CNN-based wafer defect classification framework.</em>
 </p>
